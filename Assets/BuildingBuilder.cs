@@ -51,7 +51,10 @@ public class BuildingBuilder : MonoBehaviour
         if (respawn)
         {
             respawn = false;
+            this.transform.DetachChildren();
+            //this.transform.position.z = this.transform.position.z + 10;
             GenerateHouse();
+
         }
     }
 }
