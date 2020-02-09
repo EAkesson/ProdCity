@@ -304,8 +304,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1032474132}
   - component: {fileID: 1032474131}
+  - component: {fileID: 1032474133}
   m_Layer: 0
-  m_Name: BuildingHandler
+  m_Name: WorldBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,8 +336,9 @@ MonoBehaviour:
   - {fileID: 100002, guid: 02c0afe3e5c66cc4cbf1ce7f0c538f7e, type: 3}
   topSegments:
   - {fileID: 100002, guid: 28b4b04df1bdf17428c4e192715ef50a, type: 3}
-  - {fileID: 100002, guid: a3fac1f123b4dae40a4627bed682a353, type: 3}
+  - {fileID: 100002, guid: 3675f0302959d1645a0e2f0a8a3af116, type: 3}
   - {fileID: 100002, guid: d7087c362dd827243b612cf3e4b0011d, type: 3}
+  respawn: 0
 --- !u!4 &1032474132
 Transform:
   m_ObjectHideFlags: 0
@@ -351,3 +353,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032474133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032474130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5054b8461be11a74ea0d77bf3bb374c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BB: {fileID: 1032474131}

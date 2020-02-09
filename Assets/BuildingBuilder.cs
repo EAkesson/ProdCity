@@ -9,23 +9,23 @@ public class BuildingBuilder : MonoBehaviour
     public GameObject[] groundSegments;
     public GameObject[] middleSegments;
     public GameObject[] topSegments;
-    public bool respawn = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        GenerateHouse();
+        
     }
 
-    void GenerateHouse()
+    public Vector3 GenerateHouse(int numOfSegments)
     {
-        int numberOfSegments = Random.Range(minHeight, maxHeight);
+        Mathf.Clamp(numOfSegments, minHeight, maxHeight);
+        //int numOfSegments = Random.Range(minHeight, maxHeight);
         float totalHeight = 0.0f;
 
         //Spawn base
         totalHeight += GenerateSegment(groundSegments, totalHeight);
 
-        for (int i = 2; i < numberOfSegments; i++)
+        for (int i = 2; i < numOfSegments; i++)
         {
             //Spawn new base part
             totalHeight += GenerateSegment(middleSegments, totalHeight);
@@ -33,6 +33,10 @@ public class BuildingBuilder : MonoBehaviour
 
         //Spawn roof
         totalHeight += GenerateSegment(topSegments, totalHeight);
+
+        Vector3 houseDim = this.gameObject.GetComponent<MeshFilter>().mesh.bounds.size;
+        this.transform.DetachChildren();
+        return houseDim;
     }
 
     float GenerateSegment(GameObject[] segmentPool, float placementHeight)
@@ -48,13 +52,6 @@ public class BuildingBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (respawn)
-        {
-            respawn = false;
-            this.transform.DetachChildren();
-            //this.transform.position.z = this.transform.position.z + 10;
-            GenerateHouse();
-
-        }
+ 
     }
 }
