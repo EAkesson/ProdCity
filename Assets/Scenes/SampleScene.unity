@@ -338,7 +338,6 @@ MonoBehaviour:
   - {fileID: 100002, guid: 28b4b04df1bdf17428c4e192715ef50a, type: 3}
   - {fileID: 100002, guid: 3675f0302959d1645a0e2f0a8a3af116, type: 3}
   - {fileID: 100002, guid: d7087c362dd827243b612cf3e4b0011d, type: 3}
-  respawn: 0
 --- !u!4 &1032474132
 Transform:
   m_ObjectHideFlags: 0
@@ -366,3 +365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BB: {fileID: 1032474131}
+  respawn: 0
+  blockSize: {x: 3, y: 3}
+  cityTileSize: {x: 50, y: 50}
