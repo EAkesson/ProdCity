@@ -6,26 +6,28 @@ public class BuildingBuilder : MonoBehaviour
 {
     public int minHeight = 2;
     public int maxHeight = 10;
+    static public int houseNumber = 0;
     public GameObject[] groundSegments;
     public GameObject[] middleSegments;
     public GameObject[] topSegments;
+    GameObject city;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        city = new GameObject("City");
     }
 
     public Vector3 GenerateHouse(int numOfSegments)
     {
-        GameObject houseGameObj = new GameObject("Building" + 56);
+        houseNumber++;
+        GameObject houseGameObj = new GameObject("Building" + houseNumber);
         houseGameObj.transform.position = this.transform.position;
         houseGameObj.transform.rotation = this.transform.rotation;
 
-        houseGameObj.transform.SetParent(this.transform);
+        houseGameObj.transform.SetParent(city.transform);
 
-        Mathf.Clamp(numOfSegments, minHeight, maxHeight);
-        //int numOfSegments = Random.Range(minHeight, maxHeight);
+        Mathf.Clamp(numOfSegments, minHeight, maxHeight);        
         float totalHeight = 0.0f;
 
         //Spawn base
@@ -40,8 +42,8 @@ public class BuildingBuilder : MonoBehaviour
         //Spawn roof
         totalHeight += GenerateSegment(topSegments, totalHeight, houseGameObj);
 
-        Vector3 houseDim = this.gameObject.GetComponentInChildren<MeshFilter>().mesh.bounds.size;
-        this.transform.DetachChildren();
+        Vector3 houseDim = city.gameObject.GetComponentInChildren<MeshFilter>().mesh.bounds.size;
+        //this.transform.DetachChildren();
         return houseDim;
     }
 
