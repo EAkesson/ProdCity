@@ -18,7 +18,7 @@ public class BuildingBuilder : MonoBehaviour
         city = new GameObject("City");
     }
 
-    public Vector3 GenerateHouse(int numOfSegments)
+    public Vector3 GenerateHouse(int numOfSegments, Vector2 pos)
     {
         houseNumber++;
         GameObject houseGameObj = new GameObject("Building" + houseNumber);
@@ -27,7 +27,8 @@ public class BuildingBuilder : MonoBehaviour
 
         houseGameObj.transform.SetParent(city.transform);
 
-        Mathf.Clamp(numOfSegments, minHeight, maxHeight);        
+        //Mathf.Clamp(numOfSegments, minHeight, maxHeight);    
+        numOfSegments = GenHeightFromPNoise(pos);
         float totalHeight = 0.0f;
 
         //Spawn base
@@ -55,6 +56,13 @@ public class BuildingBuilder : MonoBehaviour
 
         float segmentHeight = segment.GetComponentInChildren<MeshFilter>().mesh.bounds.size.y;
         return segmentHeight;
+    }
+
+    int GenHeightFromPNoise(Vector2 pos)
+    {
+        int height = 0;
+        height = 2 + Mathf.FloorToInt((maxHeight-2) * Mathf.PerlinNoise(pos.x, pos.y));
+        return height;
     }
 
     // Update is called once per frame
