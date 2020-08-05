@@ -168,7 +168,7 @@ public abstract class Model
 		}
 
 		for (int l = 0; l < limit || limit == 0; l++)
-		{
+		{           
 			bool? result = Observe();
 			if (result != null) return (bool)result;
 			Propagate();

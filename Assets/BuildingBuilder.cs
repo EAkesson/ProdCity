@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BuildingBuilder : MonoBehaviour
 {
-    public int minHeight = 2;
-    public int maxHeight = 10;
-    public float perlNoiseStepRes = 0.01f;
+    
     public GameObject[] groundSegments;
     public GameObject[] middleSegments;
-    public GameObject[] topSegments;    
+    public GameObject[] topSegments;
 
-    float lotWidth;
+    int minHeight = 2;
+    int maxHeight = 10;
+    float perlNoiseStepRes = 0.09f;
+    float lotWidth;    
     static int houseNumber = 0;
     Vector2 houseDimensions;
+    Vector2 perlNOffset;
     GameObject city;
 
     // Start is called before the first frame update
@@ -31,12 +33,25 @@ public class BuildingBuilder : MonoBehaviour
         return largestDim;
     }
 
-    public void setParams(float lotW)
+    public void setParams(float _lotW, int _seed, int _minH, int _maxH, float _perlSRes)
     {
-        lotWidth = lotW;
+        lotWidth = _lotW;
+
+        if (_seed == 0)
+        {
+            perlNOffset = new Vector2(Random.Range(0.0f, 99990.9f), Random.Range(0.0f, 99990.9f));
+        }
+        else
+        {
+            perlNOffset = new Vector2(_seed*3, _seed*7); //Just multiply with two prime numbers to get a bit distanse between different seeds
+        }
+
+        minHeight = _minH;
+        maxHeight = _maxH;
+        perlNoiseStepRes = _perlSRes;        
     }
 
-    public void GenerateHouse(int numOfSegments, Vector2 pos, float houseRot)
+    public void GenerateHouse(Vector2 pos, float houseRot)
     {
         houseNumber++;
         GameObject houseGameObj = new GameObject("Building" + houseNumber);
@@ -48,7 +63,7 @@ public class BuildingBuilder : MonoBehaviour
         //houseGameObj.transform.Rotate(0.0f, houseRot, 0.0f, Space.Self);
 
         //Mathf.Clamp(numOfSegments, minHeight, maxHeight);    
-        numOfSegments = GenHeightFromPNoise(pos);
+        int numOfSegments = GenHeightFromPNoise(pos);
         float totalHeight = 0.0f;
 
         //Spawn base
@@ -83,7 +98,7 @@ public class BuildingBuilder : MonoBehaviour
     {
         int height = 0;         
         Vector2 posInGrid = pos / lotWidth; //TODO: do i need too round        
-        Vector2 posInPelN = posInGrid * perlNoiseStepRes;
+        Vector2 posInPelN = posInGrid * perlNoiseStepRes + perlNOffset;
         float noiseVal = Mathf.Clamp(Mathf.PerlinNoise(posInPelN.x, posInPelN.y), 0.0f, 1.0f); //Need to clamp due too PerlinNoise return can be slightly less than 0.0f or slightly exceed 1.0f.       
         height = 2 + Mathf.FloorToInt((maxHeight-2) * noiseVal);               
         return height;

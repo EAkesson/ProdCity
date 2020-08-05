@@ -24,7 +24,7 @@ class OverlapWFC : MonoBehaviour{
 	public GameObject[,] rendering;
 	public GameObject output;
 	private Transform group;
-    private bool undrawn = true;
+    public bool undrawn = true;
 
 	public static bool IsPrefabRef(UnityEngine.Object o){
 		#if UNITY_EDITOR
@@ -68,6 +68,12 @@ class OverlapWFC : MonoBehaviour{
 			Run();
 		}
 	}
+
+    public void setWnD(int wid, int dep)
+    {
+        width = wid;
+        depth = dep;
+    }
 
 	public void Generate() {
 		if (training == null){Debug.Log("Can't Generate: no designated Training component");}
@@ -119,13 +125,13 @@ class OverlapWFC : MonoBehaviour{
 		return rendering[x,y];
 	}
 
-	public void Draw(){
+	public void Draw(){        
 		if (output == null){return;}
 		if (group == null){return;}
         undrawn = false;
 		try{
 			for (int y = 0; y < depth; y++){
-				for (int x = 0; x < width; x++){
+				for (int x = 0; x < width; x++){                    
 					if (rendering[x,y] == null){
 						int v = (int)model.Sample(x, y);
 						if (v != 99 && v < training.tiles.Length){
